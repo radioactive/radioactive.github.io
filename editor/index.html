@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Radioactive UI Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/coffee-script/extras/coffee-script.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+    <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+    <script>
+        less = {
+            env: "development",
+            async: false,
+            fileAsync: false,
+            poll: 5000,
+            functions: {},
+            dumpLineNumbers: "comments",
+            relativeUrls: false
+        }
+    </script>
+    <link rel="stylesheet/less" href="styles.less"/>
+    <script src="bower_components/less/dist/less-1.7.4.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>HTML</h2>
+            <div id="htmleditor"></div>
+        </div>
+        <div class="col-md-6">
+            <h2>RAML</h2>
+            <div id="ramleditor"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="./target/scala-2.11/radioactive-ui-editor-opt.js"></script>
+<script type="text/javascript" src="./target/scala-2.11/radioactive-ui-editor-launcher.js"></script>
+
+</body>
+</html>
