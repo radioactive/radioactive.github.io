@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+        <script src="../../dist/radioactive.js"></script>
+        <script>
+            function toUC( str, cb ){
+                setTimeout( function(){
+                    cb( null, str.toUpperCase() )
+                }, 1000 )
+            }
+
+
+            (function normalVersion(){
+
+
+                $(function(){
+
+                    var nameref  = new Firebase("https://d88d9s8.firebaseio.com/name");
+                    var lastnameref  = new Firebase("https://d88d9s8.firebaseio.com/lastname");
+
+                    var name     = undefined;
+                    var lastname = undefined;
+
+                    nameref.on( "value", function( namesnap ){
+                        name = namesnap.val();
+                        somethingChanged();
+                    })
+
+                    lastnameref.on( "value", function( lastnamesnap ){
+                        lastname = lastnamesnap.val();
+                        somethingChanged();
+                    })
+
+                    function somethingChanged(){
+                            var fullname =  name + " " + lastname;
+                            toUC( fullname, function( e, r ){
+                                console.log( r )
+                            })
+
+                    }
+
+                })
+
+
+            });
+
+
+            (function radioactiveVersion(){
+                $(function(){
+
+
+                    var currentBusId  = radioactive.cell("49");
+                    // connect your datasources
+                    var name        = radioactive.data("https://d88d9s8.firebaseio.com/name");
+                    var lastname    = radioactive.data("https://d88d9s8.firebaseio.com/lastname");
+                    var content     = radioactive.data("#content");
+                    var salutation  = radioactive.data("#salutation");
+                    var toUCr       = radioactive.syncify( toUC );
+                    function dataForBus( id ){
+                        return radioactive.data("https://publicdata-transit.firebaseio.com/sf-muni/vehicles/" + id )();
+                    }
+
+
+                    // this is where you code
+
+                    function getFullName(){
+                        return name() + " " + lastname()
+                    }
+
+                    function getMessage(){
+                        return toUCr( salutation() + " " + getFullName() );
+                    }
+
+                    // run your code in a managed NFRP
+                    radioactive.react(function(){
+
+                        content( getMessage() )
+
+                        $("#contentp").text(  JSON.stringify( dataForBus( currentBusId() ) ) )
+
+
+
+                    })
+
+
+                })
+
+            })()
+
+
+
+
+
+
+
+        </script>
+    </head>
+    <body>
+        <input id="salutation"/>
+        <input id="content"/>
+        <p id="contentp"></p>
+
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+    <script src="../../dist/radioactive.js"></script>
+    <script src="../../dist/radioactive.js"></script>
+    <script>
+
+        var selected = radioactive.cell("bar.json");
+
+        $(function(){
+
+            radioactive.react(function(){
+
+                var options      = radioactive.data("options.json")().keys()
+                var jsondata     = radioactive.data( jsonfile )
+                var firebaseurl  = jsondata.url
+                var firebasedata = radioactive.data( firebaseurl )
+
+                $("#content").text( firebasedata )
+
+            })
+
+            $("#content").on("click", function(){
+                filename("foo.json")
+            })
+
+        })
+
+    </script>
+</head>
+<body>
+<p id="content"></p>
+<input id="name" type="text"/>
+<input id="lastname" type="text"/>
+</body>
+</html>
